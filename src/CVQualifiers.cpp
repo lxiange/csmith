@@ -593,7 +593,7 @@ CVQualifiers::output_qualified_type(const Type* t, std::ostream &out) const
 			if (!CGOptions::volatiles())
 				assert(0);
 			if (i > 0) out << " ";
-			out << "volatile ";
+//			out << "volatile ";
 		}
 		if (i==0) {
 			base->Output(out);
@@ -623,7 +623,7 @@ CVQualifiers::output_qualified_type_with_deputy_annotation(const Type* t, std::o
 		if (is_volatiles[i]) {
 			if (!CGOptions::volatiles())
 				assert(0);
-			out << "volatile ";
+//			out << "volatile ";
 		}
 		if (i==0) {
 			base->Output(out);
@@ -728,7 +728,7 @@ CVQualifiers::OutputFirstQuals(std::ostream &out) const
 	if (is_volatiles.size() > 0 && is_volatiles[0]) {
 		if (!CGOptions::volatiles())
 			assert(0);
-		out << "volatile ";
+//		out << "volatile ";
 	}
 }
 

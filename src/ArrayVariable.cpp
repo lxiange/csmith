@@ -541,7 +541,8 @@ ArrayVariable::OutputDef(std::ostream &out, int indent) const
 			for (i=0; i<sizes.size(); i++) {
 				out << "[" << sizes[i] << "]";
 			}
-			out << " = " << build_initializer_str(init_strings) << ";";
+			out << ";";
+//			out << " = " << build_initializer_str(init_strings) << ";";
 			outputln(out);
 		}
 	}
@@ -663,46 +664,51 @@ ArrayVariable::output_init(std::ostream &out, const Expression* init, const vect
 	size_t i;
 
 	for (i=0; i<get_dimension(); i++) {
-		if (i > 0) {
-			output_tab(out, indent);
-			out << "{";
-			outputln(out);
-			indent++;
-		}
 		output_tab(out, indent);
-		out << "for (";
 		out << cvs[i]->get_actual_name();
 		out << " = 0; ";
-		out << cvs[i]->get_actual_name();
-		out << " < " << sizes[i] << "; ";
-		out << cvs[i]->get_actual_name();
-		if (CGOptions::post_incr_operator()) {
-			out << "++)";
-		}
-		else {
-			out << " = " << cvs[i]->get_actual_name() << " + 1)";
-		}
 		outputln(out);
+		output_tab(out, indent);
+		out << "while (";
+		out << cvs[i]->get_actual_name();
+		out << " < " << sizes[i] << ")";
+
+//		out << "for (";
+//		out << cvs[i]->get_actual_name();
+//		out << " = 0; ";
+//		out << cvs[i]->get_actual_name();
+//		out << " < " << sizes[i] << "; ";
+//		out << cvs[i]->get_actual_name();
+//		if (CGOptions::post_incr_operator()) {
+//			out << "++)";
+//		}
+//		else {
+//			out << " = " << cvs[i]->get_actual_name() << " + 1)";
+//		}
+		outputln(out);
+
+		output_open_encloser("{", out, indent);
 	}
-	output_tab(out, indent+1);
+	output_tab(out, indent);
 	output_with_indices(out, cvs);
 	out << " = ";
 	init->Output(out);
 	out << ";";
-	outputln(out);
 	// output the closing bracelets
-	for (i=1; i<get_dimension(); i++) {
-		indent--;
-		output_tab(out, indent);
-		out << "}";
+	for (i=0; i<get_dimension(); i++) {
 		outputln(out);
+		output_tab(out, indent);
+		out << cvs[i]->get_actual_name() << " = " << cvs[i]->get_actual_name() << " + 1;";
+		output_close_encloser("}", out, indent);
 	}
+	outputln(out);
 }
 
 // --------------------------------------------------------------
 void
 ArrayVariable::output_addr_checks(std::ostream &out, const Variable* var, string field_name, int indent) const
 {
+	assert(0);
 	size_t i;
 	vector<const Variable *> &ctrl_vars = Variable::get_new_ctrl_vars();
 	// declare control variables
@@ -780,6 +786,7 @@ ArrayVariable::make_print_index_str(const vector<const Variable *> &cvs) const
 void
 ArrayVariable::hash(std::ostream& out) const
 {
+	assert(0);
 	if (collective != 0) return;
 	vector<string> field_names;
 	vector<const Type *> field_types;

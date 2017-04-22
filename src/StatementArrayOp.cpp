@@ -78,7 +78,7 @@ StatementArrayOp::make_random_iter_ctrl(int size, int &init, int &incr)
 Statement*
 StatementArrayOp::make_random(CGContext &cg_context)
 {
-	bool ary_init = rnd_flipcoin(5);
+	bool ary_init = rnd_flipcoin(0);
 	ERROR_GUARD(NULL);
 	if (ary_init) {
 		return make_random_array_init(cg_context);

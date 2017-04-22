@@ -141,7 +141,7 @@ ExtensionMgr::OutputInit(std::ostream &out)
 			out << "int main (int argc, char* argv[])" << endl;
 		}
 		else {
-			out << "int main (void)" << endl;
+			out << "int main ()" << endl;
 		}
 		out << "{" << endl;
 	}
@@ -156,8 +156,10 @@ ExtensionMgr::OutputFirstFunInvocation(std::ostream &out, FunctionInvocation *in
 	assert(invoke);
 	if (ExtensionMgr::extension_ == NULL) {
         	out << "    ";
+			out << "write(";
         	invoke->Output(out);
-        	out << ";" << endl;
+			out << ")";
+			out << ";" << endl;
 	}
 	else {
 		ExtensionMgr::extension_->OutputFirstFunInvocation(out, invoke);

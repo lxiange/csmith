@@ -105,8 +105,8 @@ OutputMgr::OutputMain(std::ostream &out)
 
 	FunctionInvocation *invoke = NULL;
 	invoke = ExtensionMgr::MakeFuncInvocation(GetFirstFunction(), cg_context);
-	out << endl << endl;
-	output_comment_line(out, "----------------------------------------");
+//	out << endl << endl;
+//	output_comment_line(out, "----------------------------------------");
 
 	ExtensionMgr::OutputInit(out);
 
@@ -122,17 +122,17 @@ OutputMgr::OutputMain(std::ostream &out)
 	}
 	else {
 		// set up a global variable that controls if we print the hash value after computing it for each global
-		out << "    int print_hash_value = 0;" << endl;
+//		out << "    int print_hash_value = 0;" << endl;
 		if (CGOptions::accept_argc()) {
 			out << "    if (argc == 2 && strcmp(argv[1], \"1\") == 0) print_hash_value = 1;" << endl;
 		}
 
-		out << "    platform_main_begin();" << endl;
+//		out << "    platform_main_begin();" << endl;
 		if (CGOptions::compute_hash()) {
 			out << "    crc32_gentab();" << endl;
 		}
-
 		ExtensionMgr::OutputFirstFunInvocation(out, invoke);
+		outputln(out);
 
 	#if 0
 		out << "    ";
@@ -151,7 +151,7 @@ OutputMgr::OutputMain(std::ostream &out)
 		if (CGOptions::compute_hash()) {
 			out << "    platform_main_end(crc32_context ^ 0xFFFFFFFFUL, print_hash_value);" << endl;
 		} else {
-			out << "    platform_main_end(0,0);" << endl;
+//			out << "    platform_main_end(0,0);" << endl;
 		}
 	}
 	ExtensionMgr::OutputTail(out);
@@ -248,44 +248,44 @@ void
 OutputMgr::OutputHeader(int argc, char *argv[], unsigned long seed)
 {
 	std::ostream &out = get_main_out();
-	if (CGOptions::concise()) {
-		out << "// Options:  ";
-		if (argc <= 1) {
-			out << " (none)";
-		} else {
-			for (int i = 1; i < argc; ++i) {
-				out << " " << argv[i];
-			}
-		}
-		out << endl;
-	}
-	else {
-		out << "/*" << endl;
-		out << " * This is a RANDOMLY GENERATED PROGRAM." << endl;
-		out << " *" << endl;
-		out << " * Generator: " << PACKAGE_STRING << endl;
-#ifdef GIT_VERSION
-		out << " * Git version: " << GIT_VERSION << endl;
-#endif
-		out << " * Options:  ";
-		if (argc <= 1) {
-			out << " (none)";
-		} else {
-			for (int i = 1; i < argc; ++i) {
-				out << " " << argv[i];
-			}
-		}
-		out << endl;
-		out << " * Seed:      " << seed << endl;
-		out << " */" << endl;
-		out << endl;
-	}
+//	if (CGOptions::concise()) {
+//		out << "// Options:  ";
+//		if (argc <= 1) {
+//			out << " (none)";
+//		} else {
+//			for (int i = 1; i < argc; ++i) {
+//				out << " " << argv[i];
+//			}
+//		}
+//		out << endl;
+//	}
+//	else {
+//		out << "/*" << endl;
+//		out << " * This is a RANDOMLY GENERATED PROGRAM." << endl;
+//		out << " *" << endl;
+//		out << " * Generator: " << PACKAGE_STRING << endl;
+//#ifdef GIT_VERSION
+//		out << " * Git version: " << GIT_VERSION << endl;
+//#endif
+//		out << " * Options:  ";
+//		if (argc <= 1) {
+//			out << " (none)";
+//		} else {
+//			for (int i = 1; i < argc; ++i) {
+//				out << " " << argv[i];
+//			}
+//		}
+//		out << endl;
+//		out << " * Seed:      " << seed << endl;
+//		out << " */" << endl;
+//		out << endl;
+//	}
 
-	if (!CGOptions::longlong()) {
-		out << endl;
-		out << "#define NO_LONGLONG" << std::endl;
-		out << endl;
-	}
+//	if (!CGOptions::longlong()) {
+//		out << endl;
+//		out << "#define NO_LONGLONG" << std::endl;
+//		out << endl;
+//	}
 	if (CGOptions::enable_float()) {
 		out << "#include <float.h>\n";
 		out << "#include <math.h>\n";
@@ -293,18 +293,18 @@ OutputMgr::OutputHeader(int argc, char *argv[], unsigned long seed)
 
 	ExtensionMgr::OutputHeader(out);
 
-	out << runtime_include << endl;
+//	out << runtime_include << endl;
 
- 	if (!CGOptions::compute_hash()) {
-		if (CGOptions::allow_int64())
-			out << "volatile uint64_t " << Variable::sink_var_name << " = 0;" << endl;
-		else
-			out << "volatile uint32_t " << Variable::sink_var_name << " = 0;" << endl;
-	}
-	out << endl;
+// 	if (!CGOptions::compute_hash()) {
+//		if (CGOptions::allow_int64())
+//			out << "volatile uint64_t " << Variable::sink_var_name << " = 0;" << endl;
+//		else
+//			out << "volatile uint32_t " << Variable::sink_var_name << " = 0;" << endl;
+//	}
+//	out << endl;
 
-	out << "static long __undefined;" << endl;
-	out << endl;
+//	out << "static long __undefined;" << endl;
+//	out << endl;
 
 	if (CGOptions::depth_protect()) {
 		out << "#define MAX_DEPTH (5)" << endl;
@@ -322,10 +322,10 @@ OutputMgr::OutputHeader(int argc, char *argv[], unsigned long seed)
 		out << access_once_macro << endl;
 	}
 
-	if (CGOptions::step_hash_by_stmt()) {
-		OutputMgr::OutputHashFuncDecl(out);
-		OutputMgr::OutputStepHashFuncDecl(out);
-	}
+//	if (CGOptions::step_hash_by_stmt()) {
+//		OutputMgr::OutputHashFuncDecl(out);
+//		OutputMgr::OutputStepHashFuncDecl(out);
+//	}
 }
 
 void

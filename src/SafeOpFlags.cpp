@@ -244,8 +244,8 @@ SafeOpFlags::clone() const
 void
 SafeOpFlags::OutputSize(std::ostream &out) const
 {
-	if(!op1_)
-		out << "u";
+//	if(!op1_)
+//		out << "u";
 
 	switch(op_size_) {
 	case sInt8:
@@ -255,7 +255,7 @@ SafeOpFlags::OutputSize(std::ostream &out) const
 		out << "int16_t";
 		break;
 	case sInt32:
-		out << "int32_t";
+		out << "int";
 		break;
 	case sInt64:
 		out << "int64_t";

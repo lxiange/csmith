@@ -110,8 +110,10 @@ GenerateRandomIntConstant(void)
 {
 	string val;
 	// Int constant - Max 8 Hex digits on 32-bit platforms
-	if (CGOptions::ccomp() || !CGOptions::longlong())
-		val = "0x" + RandomHexDigits( 8 );
+	if (CGOptions::ccomp() || !CGOptions::longlong()){
+		val = RandomDigits(8);
+	}
+//		val = "0x" + RandomHexDigits( 8 );
 	else
 		val = "0x" + RandomHexDigits( 8 ) + "L";
 

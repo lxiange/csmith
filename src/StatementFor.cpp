@@ -280,9 +280,12 @@ StatementFor::make_random(CGContext &cg_context)
 	// create CGContext for body
 	CGContext body_cg_context(cg_context, cg_context.rw_directive, iv, bound);
 	Block *body = Block::make_random(body_cg_context, true);
+
 	ERROR_GUARD_AND_DEL3(NULL, init, test, incr);
 
+	body->stms.push_back(incr);
 	StatementFor* sf = new StatementFor(cg_context.get_current_block(), *init, *test, *incr, *body);
+
 	sf->post_loop_analysis(cg_context, pre_facts, pre_effects);
 	return sf;
 }
@@ -383,20 +386,34 @@ StatementFor::~StatementFor(void)
 {
 	delete &init;
 	delete &test;
-	delete &incr;
+//	delete &incr;
 	delete &body;
 }
+
+//void
+//StatementFor::output_header(std::ostream& out, int indent) const
+//{
+//	output_tab(out, indent);
+//	out << "for (";
+//	init.OutputAsExpr(out);
+//	out << "; ";
+//	test.Output(out);
+//	out << "; ";
+//	incr.OutputAsExpr(out);
+//	out << ")";
+//	outputln(out);
+//}
 
 void
 StatementFor::output_header(std::ostream& out, int indent) const
 {
 	output_tab(out, indent);
-	out << "for (";
 	init.OutputAsExpr(out);
 	out << "; ";
+	outputln(out);
+	output_tab(out, indent);
+	out << "while (";
 	test.Output(out);
-	out << "; ";
-	incr.OutputAsExpr(out);
 	out << ")";
 	outputln(out);
 }

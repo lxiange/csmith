@@ -445,11 +445,11 @@ StatementAssign::output_op(std::ostream &out) const
 {
 	switch (op) {
 	case eSimpleAssign: out << "="; break;
-	case eMulAssign:	out << "*="; break;
-	case eDivAssign:	out << "/="; break;
+	case eMulAssign:	out << "*"; break;		//TODO: this is `*=`, I changed it.
+	case eDivAssign:	out << "/"; break;
 	case eRemAssign:	out << "%="; break;
-	case eAddAssign:	out << "+="; break;
-	case eSubAssign:	out << "-="; break;
+	case eAddAssign:	out << "+"; break;
+	case eSubAssign:	out << "-"; break;
 	case eLShiftAssign:	out << "<<="; break;
 	case eRShiftAssign:	out << ">>="; break;
 	case eBitAndAssign:	out << "&="; break;
@@ -480,6 +480,13 @@ StatementAssign::OutputSimple(std::ostream &out) const
 {
 	switch (op) {
 	default:
+		lhs.Output(out);
+		out << " = ";
+		lhs.Output(out);
+		output_op(out);
+		expr.Output(out);
+		break;
+	case eSimpleAssign:
 		lhs.Output(out);
 		out << " ";
 		output_op(out);

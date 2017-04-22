@@ -1713,13 +1713,13 @@ Type::Output(std::ostream &out) const
 	switch (eType) {
 	case eSimple:
 		if (this->simple_type == eVoid) {
-			out << "void";
+//			out << "void";
 		} else if (this->simple_type == eFloat) {
 		        out << "float";
 		} else {
-			out << (is_signed() ? "int" : "uint");
-			out << (SizeInBytes() * 8);
-			out << "_t";
+			out << "int";
+//			out << (SizeInBytes() * 8);
+//			out << "_t";
 		}
 		break;
 	case ePointer:   ptr_type->Output( out ); out << "*"; break;
@@ -1809,15 +1809,15 @@ void OutputUnionAssignOps(Type* type, std::ostream &out, bool vol)
 
 			out << "    ";
 			if (vol){
-				out << "volatile ";
+//				out << "volatile ";
 			}
 			type->Output(out); out << "& operator=(const ";
 			if (vol){
-				out << "volatile ";
+//				out << "volatile ";
 			}
 			type->Output(out); out << "& val) ";
 			if (vol){
-				out << "volatile ";
+//				out << "volatile ";
 			}
 			out << "{"; really_outputln(out);
 			out << "        if (this == &val) {"; really_outputln(out);

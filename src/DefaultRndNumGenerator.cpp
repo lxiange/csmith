@@ -222,11 +222,18 @@ DefaultRndNumGenerator::RandomDigits( int num )
 
 	std::string str;
 	const char* dec1 = AbsRndNumGenerator::get_dec1();
+
+	bool start_flag = false;
 	while (num--) {
 		int x = genrand() % 10;
-		str += dec1[x];
 		seq_->add_number(x, 10, rand_depth_);
 		rand_depth_++;
+		if(x==0 && !start_flag){
+			continue;
+		}else{
+			start_flag = true;
+			str += dec1[x];
+		}
 	}
 	return str;
 }

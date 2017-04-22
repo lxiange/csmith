@@ -530,7 +530,7 @@ Function::OutputHeader(std::ostream &out)
 		out << "inline ";
 	// force functions to be static if necessary
 	if (CGOptions::force_globals_static()) {
-		out << "static ";
+//		out << "static ";
 	}
 	rv->qfer.output_qualified_type(return_type, out);
 	out << " " << get_prefixed_name(name) << "(";
